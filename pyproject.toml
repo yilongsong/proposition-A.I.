@@ -1,0 +1,21 @@
+[project]
+name = "propositions-ai"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Yilong Song",email = "songyilong18@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "openai (>=1.68.2,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "propositions"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
