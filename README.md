@@ -7,7 +7,7 @@
 Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy, reasoned or disorganized---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
 
 **Algorithm.**
-
+```
 // --------------------------------------------------
 // PROCEDURE: take_notes(User, LLM_p)
 // Description: Processes user-generated notes into refined propositions.
@@ -36,8 +36,8 @@ procedure take_notes(User, LLM_p):
     
     // 8. Insert the final propositions into the database
     database.insert(finalProps)
-
-
+```
+```
 // --------------------------------------------------
 // PROCEDURE: read_notes(User, LLM_r)
 // Description: Retrieves and iteratively refines user queries based on stored propositions.
@@ -60,3 +60,4 @@ procedure read_notes(User, LLM_r):
          
          // User provides a follow-up query based on the response
          query ← User.followup(response)
+```
