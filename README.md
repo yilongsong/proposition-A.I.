@@ -7,6 +7,7 @@
 Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy, reasoned or disorganized---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
 
 **Algorithm.**
+
 // --------------------------------------------------
 // PROCEDURE: take_notes(User, LLM_p)
 // Description: Processes user-generated notes into refined propositions.
