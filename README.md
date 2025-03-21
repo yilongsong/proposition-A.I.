@@ -1,1 +1,1 @@
-<h1 align="center">📝propositions.ai: Propositional Note Taking Powered by Agentic LLMs</h1>
+<h1 align="center">📝propositions.ai:\nPropositional Note Taking Powered by Agentic LLMs</h1>
