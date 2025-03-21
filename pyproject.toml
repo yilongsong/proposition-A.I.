@@ -9,12 +9,15 @@ license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "openai (>=1.68.2,<2.0.0)"
+    "openai (>=1.68.2,<2.0.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "numpy (>=2.2.4,<3.0.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "propositions"}]
-
+name = "propositions-ai"
+version = "0.1.0"
+packages = [{include = "propositionsai", from = "src"}]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
