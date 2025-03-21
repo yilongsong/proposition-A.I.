@@ -9,55 +9,52 @@ Proposition A.I stores thoughts, ideas, information---anything you deem note-wor
 **Algorithm.**
 ```
 // --------------------------------------------------
-// PROCEDURE: take_notes(User, LLM_p)
-// Description: Processes user-generated notes into refined propositions.
+// PROCEDURE: take_notes(you, Agent_L.L.M.)
+// Description: Processes you-generated notes into refined propositions.
 // --------------------------------------------------
-procedure take_notes(User, LLM_p):
-    // 1. User inputs a note (e.g., from a lecture, book, or life event)
-    note ← User.input("Enter note (lecture, book, life, ...):")
+procedure take_notes(you, Agent_L.L.M.):
+    // 1. You write down some notes
+    note ← you.input("Enter note:")
     
-    // 2. LLM_p generates proposed propositions from the note
-    proposedProps ← LLM_p.process(note)
+    // 2. Agent_L.L.M. generates proposed propositions from the note
+    proposed_propositions_ ← Agent_L.L.M..process(note)
     
-    // 3. User reviews and selects preferred propositions
-    userProps ← User.review(proposedProps)
+    // 3. You review and selects preferred propositions
+    user_insisted_propositions ← you.review(proposed_propositions)
     
-    // 4. LLM_p fact-checks the user’s propositions using external tools
-    factCheckedProps ← LLM_p.process(userProps, use_tool=True)
+    // 4. Agent_L.L.M. fact-checks the you’s propositions using external tools
+    fact_checked_propositions_ ← Agent_L.L.M..process(youProps, use_tool=True)
     
-    // 5. User refines propositions based on fact-check feedback
-    revisedProps ← User.review(factCheckedProps)
+    // 5. You refine propositions based on fact-check feedback
+    user_insisted_propositions ← you.review(fact_checked_propositions)
     
-    // 6. LLM_p expands the refined propositions for clarity and detail
-    expandedProps ← LLM_p.process(revisedProps, use_tool=True)
+    // 6. Agent_L.L.M. expands the refined propositions for clarity and detail
+    expanded_propositions ← Agent_L.L.M..process(user_insisted_propositions, use_tool=True)
     
-    // 7. User finalizes the propositions after expansion
-    finalProps ← User.confirm(expandedProps)
+    // 7. You finalize the propositions after expansion
+    user_insisted_propositions ← you.confirm(expanded_propositions)
     
     // 8. Insert the final propositions into the database
-    database.insert(finalProps)
+    database.insert(user_insisted_propositions)
 ```
 ```
 // --------------------------------------------------
-// PROCEDURE: read_notes(User, LLM_r)
-// Description: Retrieves and iteratively refines user queries based on stored propositions.
+// PROCEDURE: read_notes(you, Agent_L.L.M.)
+// Description: Retrieves and iteratively refines your queries based on stored propositions.
 // --------------------------------------------------
-procedure read_notes(User, LLM_r):
-    // 1. User inputs a query (e.g., for a problem, investigation, or research)
-    query ← User.input("Enter query (problem, investigation, research, ...):")
+procedure read_notes(you, Agent_L.L.M.):
+    // 1. You make a query
+    query ← you.input("Enter query (problem, investigation, research, ...):")
     
     // 2. Retrieve relevant propositions via semantic search
-    retrievedProps ← semantic_search(database, query)
+    retrieved_propositions ← semantic_search(database, query)
     
-    // 3. Initialize conversation history (optional)
+    // 3. Initialize conversation history
     conversation_history ← [query]
     
-    // 4. Iteratively process the query while there is follow-up input
+    // 4. Interrogation
     while query is not None and query ≠ "":
-         // Generate a response using LLM_r with context from retrieved propositions
-         response ← LLM_r.generate(query, context=retrievedProps)
+         response ← Agent_L.L.M..generate(query, context=retrievedProps)
          conversation_history.append(response)
-         
-         // User provides a follow-up query based on the response
-         query ← User.followup(response)
+         query ← you.followup(response)
 ```
