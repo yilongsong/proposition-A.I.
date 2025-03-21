@@ -59,3 +59,5 @@ procedure read_notes(you, Agent_L.L.M.-2):
          conversation_history.append(response)
          query ← you.followup(response)
 ```
+
+Of-course, you may read notes unassisted. Propositions are organized into graphs and lists by topics or narratives. Or you can view them by date of creation.
