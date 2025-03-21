@@ -4,7 +4,7 @@
 
 **Proposition A.I.** Note-taking may be better when done propositionally. Propositional note-taking may be better with the help of agentic LLMs.
 
-Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy, reasoned or disorganized---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
+Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy, already well-arranged or disorganized---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
 
 **Algorithm.** (*Take Notes*) We design a human-in-the-loop (HITL) pipeline for note taking. This process refines the propositions stored both in the database and in your brain---or you can just spam click "accept" and take the LLM's suggestion unaltered.
 ```
