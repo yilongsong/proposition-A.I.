@@ -1,1 +1,1 @@
-# propositions.ai
+# propositions.ai: Propositional Note Taking Powered by LLMs
