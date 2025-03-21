@@ -55,7 +55,7 @@ procedure read_notes(you, Agent_L.L.M.-2):
     
     // 4. Interrogation
     while query is not None and query ≠ "":
-         response ← Agent_L.L.M.-2.generate(query, context=retrievedProps)
+         response ← Agent_L.L.M.-2.generate(query, context=retrieved_propositions)
          conversation_history.append(response)
          query ← you.followup(response)
 ```
