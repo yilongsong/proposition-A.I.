@@ -28,7 +28,7 @@ procedure take_notes(you, Agent_L.L.M.-1):
     // 5. You refine propositions based on fact-check feedback
     user_insisted_propositions ← you.review(fact_checked_propositions)
     
-    // 6. Agent_L.L.M.-1 expands the refined propositions for clarity and detail
+    // 6. Agent_L.L.M.-1 expands the refined propositions to include more meaningful and true ideas
     expanded_propositions ← Agent_L.L.M.-1.process(user_insisted_propositions, use_tool=True)
     
     // 7. You finalize the propositions after expansion
