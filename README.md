@@ -4,16 +4,31 @@
 
 **Proposition A.I.** Note-taking may be better when done propositionally; propositional note-taking may be better done with the help of agentic LLMs.
 
-Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy, already well-arranged or disorganized---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
+Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
 
-**Algorithm.** (*Take Notes*) We design a human-in-the-loop (HITL) pipeline for note taking. This process refines the propositions stored both in the database and in your brain---or you can just spam click "accept" and take the LLM's suggestion unaltered.
+We divide what we call propositions into four categories:
+1. Knowledge propositions:
+    *A half space classifier is typically defined by a decision boundary of the form: $f(x)=\text{sign}(w^Tx+b) \in \{-1, +1\}.$*
+
+2. Interpretations:
+    *A half space can be understood as one side of a hyperplane, which splits a space into two "halves".*
+
+3. Examples:
+    *An example of a simple half space: consider the $\mathbb{R}^2$ coordinate space. A vertical line at $x=3$ devides the plane into two half spaces, where the left half space contains all points with $x < 3$ (e.g., (2,4)) and the right half space all points with $x > 3$ (e.g., (4,0)). The line $x = 3$ acts as the decision boundary.*
+
+4. Opinions:
+    *Professor: standalone half space classifiers are rarely used, but the concept of half spaces is foundational to many widely used algorithms (e.g. SVMs, perceptrons, linear programming, etc.).*
+
+Note-taking in Proposition A.I consists of note-jotting and note-refining. User need not worry about wording, arranging, or typesetting at "note-jotting" time---although they should be conscious of the four categories, which is more useful than worrying about non-essential wording or typesetting. Note refining can be done immediately after note-jotting or at another time.
+
+**Algorithm.** (*Take Notes*) We design a human-in-the-loop (HITL) pipeline for note-taking. This process obtains and refines the propositions stored both in the database and in your brain---or you can just select "accept" or "persist" to take the LLM's suggestions unaltered or ignore.
 ```
 // --------------------------------------------------
 // PROCEDURE: take_notes(you, Agent_L.L.M.-1)
 // Description: Processes your notes into refined propositions and store.
 // --------------------------------------------------
 procedure take_notes(you, Agent_L.L.M.-1):
-    // 1. You write down some notes
+    // 1. You write down some notes (note-taking time)
     note ← you.input("Enter note:")
     
     // 2. Agent_L.L.M.-1 generates proposed propositions from the note
