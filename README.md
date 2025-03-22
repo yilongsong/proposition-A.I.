@@ -2,7 +2,7 @@
 
 **Definition.** (*Propositional Note-Taking*) Note-taking can be described as "propositional" when the notes are composed of *concise, refined, true* propositions.
 
-**Proposition A.I.** Note-taking may be better when done propositionally. Propositional note-taking may be better done with the help of agentic LLMs.
+**Proposition A.I.** Note-taking may be better when done propositionally; propositional note-taking may be better done with the help of agentic LLMs.
 
 Proposition A.I stores thoughts, ideas, information---anything you deem note-worthy, already well-arranged or disorganized---as concise, refined, true propositions, organizes them, and retrieves them for your reference.
 
