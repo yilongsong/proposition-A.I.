@@ -6,8 +6,8 @@ Function abstractions for QA using LLM-QA.
 from openai import OpenAI
 
 client = OpenAI()
-from propositionsai.search import semantic_search
-from propositionsai.config import LLM_QA_MODEL, LLM_QA_TEMPERATURE, QA_TOP_K
+from propositionai.search import semantic_search
+from propositionai.config import LLM_QA_MODEL, LLM_QA_TEMPERATURE, QA_TOP_K
 
 def answer_query(conversation: list) -> str:
     """

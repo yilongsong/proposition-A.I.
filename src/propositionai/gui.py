@@ -11,11 +11,11 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 
-from propositionsai.llm_processor import process_note
-from propositionsai.llm_qa import answer_query
-from propositionsai.db import insert_note
-from propositionsai.search import semantic_search
-from propositionsai.config import QA_TOP_K
+from propositionai.llm_processor import process_note
+from propositionai.llm_qa import answer_query
+from propositionai.db import insert_note
+from propositionai.search import semantic_search
+from propositionai.config import QA_TOP_K
 
 class NoteChatBox(QWidget):
     """Chat box for note taking: processes notes into propositions and saves them."""

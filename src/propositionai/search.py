@@ -12,7 +12,7 @@ from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-from propositionsai.config import *
+from propositionai.config import *
 
 
 # Define the embedding model (you can adjust as needed)
