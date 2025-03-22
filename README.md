@@ -17,19 +17,19 @@ procedure take_notes(you, Agent_L.L.M.-1):
     note ← you.input("Enter note:")
     
     // 2. Agent_L.L.M.-1 generates proposed propositions from the note
-    proposed_propositions_ ← Agent_L.L.M.-1.process(note)
+    proposed_propositions_ ← Agent_L.L.M.-1.propose_propositions(note)
     
     // 3. You review, select, or edit propositions
     user_insisted_propositions ← you.review(proposed_propositions)
     
     // 4. Agent_L.L.M.-1 fact-checks the propositions using external tools
-    fact_checked_propositions_ ← Agent_L.L.M.-1.process(youProps, use_tool=True)
+    fact_checked_propositions_ ← Agent_L.L.M.-1.fact_check(user_insisted_propositions, use_tool=True)
     
     // 5. You refine propositions based on fact-check feedback
     user_insisted_propositions ← you.review(fact_checked_propositions)
     
-    // 6. Agent_L.L.M.-1 expands the refined propositions to include more meaningful and true ideas
-    expanded_propositions ← Agent_L.L.M.-1.process(user_insisted_propositions, use_tool=True)
+    // 6. Agent_L.L.M.-1 expands the refined propositions to include other relevant and true statements
+    expanded_propositions ← Agent_L.L.M.-1.expand(user_insisted_propositions, use_tool=True)
     
     // 7. You finalize the propositions after expansion
     user_insisted_propositions ← you.confirm(expanded_propositions)
