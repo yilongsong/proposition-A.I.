@@ -57,7 +57,9 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
         "\"LLMs can be thought of as a parrot trained to mimic human languages.\"\n"
         "\"Gravity can be interpreted as the curvature of space-time caused by mass, much like a heavy ball deforms a stretched rubber sheet.\"\"\n\n"
         "\"Interpretations\" here does not refer to subjective remarks about something, but rather a description, analogy, or altered perspective "
-        "that makes a concept easier to understand.\n\n"
+        "that makes a concept easier to understand. Its difference from a knowledge proposition is that "
+        "it contains phrases like \"can be though of as\" or \"can be interpreted as\" while knowledge propositions are "
+        "direct assertions.\n\n"
         
         "Here are two examples of examples:"
         "\"Example: The task 'last letter concatenation' is"
