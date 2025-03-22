@@ -19,10 +19,10 @@ procedure take_notes(you, Agent_L.L.M.-1):
     // 2. Agent_L.L.M.-1 generates proposed propositions from the note
     proposed_propositions_ ← Agent_L.L.M.-1.process(note)
     
-    // 3. You review and selects preferred propositions
+    // 3. You review, select, or edit propositions
     user_insisted_propositions ← you.review(proposed_propositions)
     
-    // 4. Agent_L.L.M.-1 fact-checks the you’s propositions using external tools
+    // 4. Agent_L.L.M.-1 fact-checks the propositions using external tools
     fact_checked_propositions_ ← Agent_L.L.M.-1.process(youProps, use_tool=True)
     
     // 5. You refine propositions based on fact-check feedback
