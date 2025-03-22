@@ -28,22 +28,25 @@ Note-taking in Proposition A.I consists of note-jotting and note-refining. User 
 // Description: Processes your notes into refined propositions and store.
 // --------------------------------------------------
 procedure take_notes(you, Agent_L.L.M.-1):
-    // 1. You write down some notes (note-taking time)
+    // 1. You write down some notes (note-jotting stage)
     note ← you.input("Enter note:")
     
-    // 2. Agent_L.L.M.-1 generates proposed propositions from the note
-    proposed_propositions_ ← Agent_L.L.M.-1.propose_propositions(note)
+    // Note-refining stage
+    // 2. Agent_L.L.M.-1 generates proposed propositions and corresponding 
+    //    category labels from the note
+    proposed_propositions_and_labels ← Agent_L.L.M.-1.propose_propositions_and_labels(note)
     
-    // 3. You review, select, or edit propositions
-    user_insisted_propositions ← you.review(proposed_propositions)
+    // 3. You review, select, or edit propositions and labels
+    user_insisted_propositions ← you.review(proposed_propositions_and_labels)
     
-    // 4. Agent_L.L.M.-1 fact-checks the propositions using external tools
-    fact_checked_propositions_ ← Agent_L.L.M.-1.fact_check(user_insisted_propositions, use_tool=True)
+    // 4. Agent_L.L.M.-1 fact-checks knowledge propositions using external tools
+    fact_checked_propositions ← Agent_L.L.M.-1.fact_check(user_insisted_propositions, use_tool=True)
     
     // 5. You refine propositions based on fact-check feedback
     user_insisted_propositions ← you.review(fact_checked_propositions)
     
-    // 6. Agent_L.L.M.-1 expands the refined propositions to include other relevant and true statements
+    // 6. Agent_L.L.M.-1 expands the refined propositions to include background
+    //    sources and other relevant and true statements
     expanded_propositions ← Agent_L.L.M.-1.expand(user_insisted_propositions, use_tool=True)
     
     // 7. You finalize the propositions after expansion
