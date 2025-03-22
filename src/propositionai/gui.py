@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # src/propositionsai/gui.py
 
 '''
@@ -11,9 +12,9 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtCore import Qt
 
-from propositionai.llm_processor import process_note
-from propositionai.llm_qa import answer_query
-from propositionai.db import insert_note
+from propositionai.llm_note_taking import propose_propositions_and_labels
+from propositionai.llm_query import answer_query
+from propositionai.db import insert_note, init_db
 from propositionai.search import semantic_search
 from propositionai.config import QA_TOP_K
 
@@ -57,14 +58,14 @@ class NoteChatBox(QWidget):
         self.input_field.clear()
         
         # Process note into propositions using llm_processor
-        propositions = process_note(note)
+        propositions = propose_propositions_and_labels(note)
         if propositions:
             self.chat_display.append("<b>Assistant:</b>")
             # Display and store each proposition, numbered
             for idx, proposition in enumerate(propositions, start=1):
-                line = f"Proposition {idx}: {proposition[3:]}"
+                line = f"Proposition {idx}: {proposition[0]} (Type: {proposition[1]})"
                 self.chat_display.append(line)
-                insert_note(note, proposition)
+                insert_note(note, proposition[0])
         else:
             self.chat_display.append("<b>Assistant:</b> No propositions were generated.")
 
@@ -141,6 +142,8 @@ class MainWindow(QWidget):
         self.setLayout(main_layout)
 
 def run_gui():
+    init_db()
+    
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

@@ -1,8 +1,8 @@
 # src/propositionsai/main.py
 
 from propositionai.db import init_db, insert_note
-from propositionai.llm_processor import process_note
-from propositionai.llm_qa import chat_session
+from propositionai.llm_note_taking import process_note
+from propositionai.llm_query import chat_session
 
 def take_notes():
     note = input("Enter your note: ")
