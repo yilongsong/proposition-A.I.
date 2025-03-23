@@ -14,7 +14,7 @@ load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
+def propose_propositions_and_labels(note: str) -> tuple[list[tuple[str, str]], list[dict]]:
     """
     Converts a natural language note into a list of propositions paired with their corresponding labels.
 
@@ -39,6 +39,7 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
 
     Returns:
         list[tuple[str, str]]: A list of tuples, where each tuple consists of a proposition and its associated label.
+        list[dict]: A list of messages used in the LLM conversation.
     """
     messages = []
 
@@ -48,17 +49,18 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
         "Let's define some terminologies first. These terminologies are crucial for the task you will need to perform.\n\n"
         "Here's the definition of a \"proposition\" in this context: a unit of idea--written concisely and expressively--"
         "that belongs to one of four categories: knowledge proposition, interpretation, example, and opinion.\n\n"
-        "Here are three examples of knowledge propositions:\n \"The Earth revolves around the Sun.\"\n"
+        "Here are three examples of knowledge:\n \"The Earth revolves around the Sun.\"\n"
         "\"Water freezes at 0 degrees Celsius.\"\n\"A half space classifier is typically defined by a decision "
-        "boundary of the form: $f(x)=\text{sign}(w^Tx+b) \in \{-1, +1\}.$\"\n\n"
+        "boundary of the form: $f(x)=\text{sign}(w^Tx+b) \in \{-1, +1\}.$\"\n"
+        "Knowledge are direct assertions without an identified human source.\n\n"
         
         "Here are three examples of \"interpretations\":\n \"A half space can be understood as one side of a hyperplane, "
         "which splits a space into two \"halves\".\"\n"
         "\"LLMs can be thought of as a parrot trained to mimic human languages.\"\n"
-        "\"Gravity can be interpreted as the curvature of space-time caused by mass, much like a heavy ball deforms a stretched rubber sheet.\"\"\n\n"
+        "\"Gravity can be interpreted as the curvature of space-time caused by mass, much like a heavy ball deforms a stretched rubber sheet.\"\"\n"
         "\"Interpretations\" here does not refer to subjective remarks about something, but rather a description, analogy, or altered perspective "
         "that makes a concept easier to understand. Its difference from a knowledge proposition is that "
-        "it contains phrases like \"can be though of as\" or \"can be interpreted as\" while knowledge propositions are "
+        "it contains phrases like \"can be thought of as\" or \"can be interpreted as\" while knowledge propositions are "
         "direct assertions.\n\n"
         
         "Here are two examples of examples:"
@@ -78,12 +80,20 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
         "Here are three examples of \"opinions\":\n \"Bob: I believe that the Earth is flat.\"\n"
         "\"Professor: standalone half space classifiers are rarely used, but the concept of half spaces is foundational "
         "to many widely used algorithms (e.g. SVMs, perceptrons, linear programming, etc.).\"\n"
-        "\"String theory physicist: "
-        "Note that the key element of opinioin in this context is not subjectivity, but rather whether or not a source is identified.\n\n"
+        "\"Denny Zhou expectation's for AI: AI should be able to learn from just a few examples, like what humans usually do.\"\n"
+        "Note that the key element of opinioin in this context is not subjectivity, but rather whether or not a source is identified"
+        " for a statement. Sometimes a source is not explicitly identified, but can be inferred clearly from the context, then the"
+        "proposition is also an opinion\n\n"
+        
+        "We do not count questions as propositions; a question should be merged with its answer to form a proposition, and such "
+        "a proposition belongs to the answer's category.\n\n"
+        
+        "Something that is not a proposition but we still should be aware of is a \"source\". Usually it is the name of a book, academic paper, or project.\n\n"
         
         "Analyze the following text sentence by sentence and identify each unit of idea that qualifies as a \"proposition\".\n"
         f"Text: \"{note}\"\n\n"
-        "For each \"proposition\", summarize it such that it is concise and refined. Output each proposition on a new line."
+        "Reason step by step for each unit of idea on what it is stating, and which of the four categories of proposition it belongs to.\n"
+       # "For each proposition, summarize it such that it is concise and refined. Output each proposition on a new line."
     )
     
     messages.append({"role": "user", "content": prompt_generate})
@@ -96,12 +106,16 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
     
     raw_propositions = response_generate.choices[0].message.content.strip()
     
+    print(raw_propositions)
+    
     messages.append({"role": "assistant", "content": raw_propositions})
     
     # --- Stage 2: Label the Propositions (with full context) ---
     prompt_label = (
-        "Now, based on the above context, label each proposition with one of the following categories: "
-        "knowledge proposition, interpretation, example, or opinion.\n\n"
+        "Now, based on your reasoning above, summarize the units of idea into propositions (not necessarily one-to-one)\n "
+        "such that it is grammatically correct, concise and refined, "
+        "and label each proposition with its category "
+        "(knowledge, interpretation, example, opinion, source).\n\n"
         "For each proposition, output the result on a new line in the format 'label: proposition'."
     )
     
@@ -112,6 +126,8 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
         messages=messages,
         temperature=LLM_PROCESSOR_TEMPERATURE  # leaning towards deterministic output
     )
+    
+    messages.append({"role": "assistant", "content": response_label.choices[0].message.content.strip()})
     
     raw_labeled = response_label.choices[0].message.content.strip()
     proposition_lines = [line.strip() for line in raw_labeled.split("\n") if line.strip()]
@@ -125,31 +141,11 @@ def propose_propositions_and_labels(note: str) -> list[tuple[str, str]]:
             # Fallback in case a label isn't provided.
             labeled_propositions.append((line, "unknown"))
     
-    return labeled_propositions
-
-def fact_check_propositions(propositions: list[tuple]) -> list[tuple]:
-    """
-    Uses GPT-3.5-turbo to fact-check a list of propositions.
-    Returns a list of tuples (proposition, is_fact).
-    """
-    results = []
-    for proposition in propositions:
-        prompt = (
-            f"Is the following statement a fact? Answer with 'yes' or 'no'. "
-            f"\n\n\"{proposition}\"\n\n"
-        )
-        response = client.chat.completions.create(
-            model=LLM_PROCESSOR_MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=LLM_PROCESSOR_TEMPERATURE
-        )
-        is_fact = response.choices[0].message.content.strip().lower()
-        results.append((proposition, is_fact))
-    return results
+    return labeled_propositions, messages
 
 def expand_and_find_background(propositions: list[tuple]) -> list[tuple]:
     """
-    Uses GPT-3.5-turbo to expand on propositions and find background information.
+    Uses model to expand on propositions and find background information.
     Returns a list of tuples (proposition, background_info).
     """
     results = []

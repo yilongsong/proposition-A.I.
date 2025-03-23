@@ -1,5 +1,5 @@
 
-LLM_PROCESSOR_MODEL = "gpt-3.5-turbo"
+LLM_PROCESSOR_MODEL = "gpt-4"
 LLM_QA_MODEL = "gpt-3.5-turbo"
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
