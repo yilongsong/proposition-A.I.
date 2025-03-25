@@ -9,8 +9,8 @@ The familiar things:
 1. Follow the ["fork and pull request"](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project) workflow.
 2. Preserve backwards compatibility.
 3. Keep the scope of each pull request isolated.
-4. Open up an [issue]{https://github.com/yilongsong/proposition-A.I./issues} to propose a bug-fix.
-5. Start a new [discussion]{https://github.com/yilongsong/proposition-A.I./discussions} to propose new features.
+4. Open up an [issue](https://github.com/yilongsong/proposition-A.I./issues) to propose a bug-fix.
+5. Start a new [discussion](https://github.com/yilongsong/proposition-A.I./discussions) to propose new features.
 
 <h2>🖥️ Installation (temporary)</h2>
 We use poetry for managing our backend environment. To install poetry:
