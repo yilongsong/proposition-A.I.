@@ -1,6 +1,6 @@
-<h1>🚀Contributing to Propositions🚀</h1>
+<h1>🚀Contributing to Propositions</h1>
 
-Thank you for your interest in contributing to Propositions! ❤️
+Thank you for your interest in contributing to Propositions!
 
 <h2>📄General Guidelines</h2>
 
@@ -14,15 +14,20 @@ The familiar things:
 
 <h2>🖥️Installation (temporary)</h2>
 We use poetry for managing our backend environment. To install poetry:
+
 ```
 curl -sSL https://install.python-poetry.org | python3 -
 ```
+
 To install dependencies:
+
 ```
 cd backend
 poetry install
 ```
+
 To run python scripts:
+
 ```
 poetry run python path/to/script.py
 ```
