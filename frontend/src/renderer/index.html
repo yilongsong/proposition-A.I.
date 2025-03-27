@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PropositionAI</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Load Inter font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Assume Apple's icon package is available via CDN -->
+  <script src="https://unpkg.com/apple-icons@latest/dist/apple-icons.min.js"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="menu-item active" id="note-taking-menu">
+      <apple-icon name="note"></apple-icon>
+      <span>Note Taking</span>
+    </div>
+    <div class="menu-item" id="note-query-menu">
+      <apple-icon name="chat"></apple-icon>
+      <span>Note Query</span>
+    </div>
+  </div>
+  <div class="main-content">
+    <!-- Note Taking Section -->
+    <div id="note-taking-section" class="section active">
+      <textarea id="notes-input" placeholder="Enter your notes here..."></textarea>
+      <button id="cleanup-button">Cleanup</button>
+      <div id="cleanup-response" class="hidden">
+        <h3>Cleanup Results</h3>
+        <ul id="cleanup-results"></ul>
+      </div>
+    </div>
+    
+    <!-- Note Query Section -->
+    <div id="note-query-section" class="section hidden">
+      <div id="chat-window">
+        <!-- Chat messages will appear here -->
+      </div>
+      <div id="chat-input-container">
+        <input type="text" id="chat-input" placeholder="Type your message...">
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
