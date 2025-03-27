@@ -58,7 +58,7 @@ class NoteChatBox(QWidget):
         self.input_field.clear()
         
         # Process note into propositions using llm_processor
-        propositions = propose_propositions_and_labels(note)
+        propositions, _ = propose_propositions_and_labels(note)
         if propositions:
             self.chat_display.append("<b>Assistant:</b>")
             # Display and store each proposition, numbered

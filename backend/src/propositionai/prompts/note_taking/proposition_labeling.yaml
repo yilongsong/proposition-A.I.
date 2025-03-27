@@ -1,0 +1,9 @@
+description: "Prompt for labeling generated propositions"
+version: "1.0"
+author: "Yilong Song"
+template: |
+  Now, based on your reasoning above, summarize the units of idea into propositions (not necessarily one-to-one)
+  such that it is grammatically correct, concise and refined, and label each proposition with its category
+  (knowledge, interpretation, example, opinion, source).
+
+  For each proposition, output the result on a new line in the format 'label: proposition'.
