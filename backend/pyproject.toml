@@ -12,14 +12,24 @@ dependencies = [
     "openai (>=1.68.2,<2.0.0)",
     "dotenv (>=0.9.9,<0.10.0)",
     "numpy (>=2.2.4,<3.0.0)",
-    "pyside6 (>=6.8.2.1,<7.0.0.0)"
+    "pyside6 (>=6.8.2.1,<7.0.0.0.0)"
 ]
 
 [tool.poetry]
 name = "propositions-ai"
 version = "0.1.0"
+description = "AI-powered propositional note-taking"
+authors = ["Yilong Song <songyilong18@gmail.com>"]
 packages = [{include = "propositionai", from = "src"}]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.14"
+openai = ">=1.68.2"
+python-dotenv = ">=0.9.0"
+numpy = ">=2.2.4"
+pyside6 = ">=6.8.2.1"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

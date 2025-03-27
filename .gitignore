@@ -1,4 +1,20 @@
-journal.txt
-.env
-.db
+# Dependencies
+node_modules/
+**/node_modules
+**/dist
 **/__pycache__/
+
+# Environment
+.env
+*.db
+
+journal.txt
+
+**explanation**
+
+# System
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

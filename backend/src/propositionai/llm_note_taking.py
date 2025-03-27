@@ -45,7 +45,7 @@ def propose_propositions_and_labels(note: str) -> tuple[list[tuple[str, str]], l
 
     # --- Stage 1: Generate Propositions ---
     prompt_generate = (
-        "You are an expert in natural language processing.\n\n"
+        "You are an expert in logical natural language processing.\n\n"
         "Let's define some terminologies first. These terminologies are crucial for the task you will need to perform.\n\n"
         "Here's the definition of a \"proposition\" in this context: a unit of idea--written concisely and expressively--"
         "that belongs to one of four categories: knowledge proposition, interpretation, example, and opinion.\n\n"
@@ -105,8 +105,6 @@ def propose_propositions_and_labels(note: str) -> tuple[list[tuple[str, str]], l
     )
     
     raw_propositions = response_generate.choices[0].message.content.strip()
-    
-    print(raw_propositions)
     
     messages.append({"role": "assistant", "content": raw_propositions})
     
