@@ -1,18 +1,26 @@
 const { contextBridge } = require('electron');
 const { callPythonFunction } = require('./bridge');
 
-// Explicitly expose the API
 contextBridge.exposeInMainWorld(
   'api',
   {
     processNote: async (note) => {
       try {
-        console.log('Processing note:', note); // Debug log
-        const result = await callPythonFunction(note);
-        console.log('Result:', result); // Debug log
+        console.log('processNote called with:', note); // Add this
+        const result = await callPythonFunction('process', note);
+        console.log('processNote result:', result); // Add this
         return result;
       } catch (error) {
         console.error('Error in processNote:', error);
+        throw error;
+      }
+    },
+    savePropositions: async (data) => {
+      try {
+        const result = await callPythonFunction('save', data);
+        return result;
+      } catch (error) {
+        console.error('Error saving propositions:', error);
         throw error;
       }
     }

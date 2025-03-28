@@ -12,31 +12,49 @@ body {
 }
 
 .sidebar {
-  width: 250px;
+  width: 60px;           /* Reduced from 250px */
   background-color: #252526;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  align-items: center;   /* Center icons horizontally */
+  padding: 20px 10px;    /* Adjusted padding */
   box-sizing: border-box;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 15px;
-  color: #d4d4d4;
+  justify-content: center;
+  width: 48px;     /* Adjust square container size */
+  height: 48px;    /* Adjust square container size */
+  padding: 0;      /* Remove extra padding so icon is centered */
+  color: #6e6e6e;
   cursor: pointer;
   border-radius: 4px;
   margin-bottom: 10px;
-  transition: background-color 0.3s;
+  transition: all 0.2s ease;
 }
 
-.menu-item.active, .menu-item:hover {
+/* Increase the icon size */
+.menu-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* When hovered or active, only change the icon’s background */
+.menu-item:hover,
+.menu-item.active {
+  background-color: transparent;
+  color: #d4d4d4;
+}
+
+.menu-item:hover svg {
+  background-color: #2d2d2d;
+}
+
+.menu-item.active svg {
   background-color: #37373d;
-}
-
-.menu-item apple-icon {
-  margin-right: 10px;
+  border-radius: 4px;
 }
 
 .main-content {
@@ -56,44 +74,140 @@ body {
   display: block;
 }
 
+#note-taking-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.split-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.note-taking-area {
+  height: 100%;  /* Start with full height */
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);  /* Smooth easing */
+}
+
+/* Add transition for smooth height change */
+.note-taking-area.split {
+  height: 50%;
+  border-bottom: 1px solid #37373d;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  height: 100%;
+}
+
+/* Top section container */
+.note-input-container {
+    position: relative;
+    display: flex;
+    height: 100%;
+}
+
+/* Bottom section container */
+.proposition-container {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
 #notes-input {
   width: 100%;
-  height: calc(100% - 60px);
-  padding: 15px;
+  height: 100%;
+  padding: 20px;
+  padding-right: 48px; /* Make room for button */
+  padding-bottom: 20px;
   font-size: 16px;
   box-sizing: border-box;
-  border: 1px solid #3c3c3c;
-  border-radius: 4px;
+  border: none;  /* Remove border */
   resize: none;
   background-color: #1e1e1e;
   color: #d4d4d4;
+  outline: none;  /* Remove outline */
+  caret-color: #d4d4d4;
 }
 
-#propositionalize-button, #send-button {
-  padding: 10px 20px;
-  background-color: #0e639c;
-  color: #ffffff;
+/* Ensure clean spacing between sections */
+.proposition-review-area {
+  height: 0;
+  min-height: 0;
+  background-color: #1e1e1e;
+  overflow: hidden;  /* Hide overflow initially */
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);  /* Match transition */
+  position: relative;  /* For absolute positioning of buttons */
+}
+
+.proposition-review-area.visible {
+  height: 50%;
+  min-height: 100px;
+  opacity: 1;
+}
+
+.save-button,
+.send-button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 48px;   /* Increased square container size */
+  height: 48px;  /* Increased square container size */
+  padding: 0;    /* Remove extra padding */
+  background-color: #1e1e1e;
+  color: #6e6e6e;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
-#propositionalize-button:hover, #send-button:hover {
-  background-color: #1177bb;
+.save-button:hover,
+.send-button:hover {
+  /* background-color: #2d2d2d; */
+  color: #d4d4d4;
 }
 
+/* Increase icon size */
+.save-button svg,
+.send-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.send-button .send-icon.hidden,
+.send-button .stop-icon.hidden {
+  display: none;
+}
+
+.send-button.processing .send-icon {
+  display: none;
+}
+
+.send-button.processing .stop-icon {
+  display: block;
+}
+
+/* Remove old button styles */
 #propositionalize-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  margin-top: 0;
 }
 
 #cleanup-response {
-  margin-top: 20px;
-  background-color: #252526;
-  padding: 15px;
-  border-radius: 4px;
-  color: #d4d4d4;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .hidden {
@@ -129,21 +243,157 @@ body {
   color: #d4d4d4;
 }
 
-/* Scrollbar styling */
+/* WebKit scrollbar styling */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e1e1e;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #424242;
-  border-radius: 5px;
+  border-radius: 4px;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease;
+}
+
+#notes-input:hover::-webkit-scrollbar-thumb,
+#cleanup-results:hover::-webkit-scrollbar-thumb,
+.proposition-review-area:hover::-webkit-scrollbar-thumb {
+  opacity: 1 !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #4f4f4f;
+}
+
+/* Firefox scrollbar styling */
+#notes-input,
+#cleanup-results,
+.proposition-review-area {
+  scrollbar-width: none;
+}
+
+#notes-input:hover,
+#cleanup-results:hover,
+.proposition-review-area:hover {
+  scrollbar-width: thin;
+}
+
+
+#cleanup-results {
+  padding: 0px;
+  padding-top: 20px;    /* Explicit top padding */
+  padding-right: 48px;
+  height: 100%;
+  overflow-y: auto;
+  font-size: 16px;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding-bottom: 45px; /* Change from padding-right to padding-bottom */
+  outline: none;
+  border: none;
+  resize: none;
+  white-space: pre-wrap;
+}
+
+.proposition-item {
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #d4d4d4;
+}
+
+.proposition-number {
+    color: #808080;
+    user-select: none;
+    min-width: 24px;
+}
+
+.proposition-item [contenteditable="true"] {
+    flex: 1;
+    outline: none;
+    padding: 0;
+}
+
+.proposition-item [contenteditable="true"]:focus {
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+}
+
+.proposition-item .label-text {
+  color: #808080;  /* Gray color for labels */
+}
+
+.proposition-item:focus {
+  background-color: #2d2d2d;
+}
+
+.proposition-checkbox {
+  margin-right: 10px;
+}
+
+.proposition-content {
+  flex-grow: 1;
+}
+
+.review-controls {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dots {
+  display: inline-flex;
+  font-size: 20px;  /* Increase font size */
+  line-height: 1;   /* Adjust line height */
+}
+
+.dots span {
+  width: 10px;
+  margin-left: 0px;
+  animation: dot-fade 1.4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+
+.dots span:nth-child(1) { animation-delay: 0.0s; }
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-fade {
+  0%, 100% { 
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  50% { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#loading-message {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.loading-message.hidden {
+  opacity: 0;
+  pointer-events: none;
+  display: none;  /* Add this to completely remove from layout */
 }

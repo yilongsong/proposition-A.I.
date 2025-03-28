@@ -3,18 +3,29 @@ const path = require('path');
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    backgroundColor: '#1e1e1e',  // Match dark theme
-    vibrancy: 'dark',           // Add dark vibrancy effect
-    titleBarStyle: 'default',   // Use default title bar
-    trafficLightPosition: { x: 20, y: 20 }, // Adjust traffic light position
+    width: 900,          // Updated from 1200
+    height: 700,         // Updated from 800
+    minWidth: 600,       // Add minimum width
+    minHeight: 400,      // Add minimum height
+    backgroundColor: '#1e1e1e',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      sandbox: false // Allow preload script to access node modules
+      sandbox: false
     }
+  });
+
+  // Set Content Security Policy
+  win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': [
+          "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+        ]
+      }
+    });
   });
 
   win.loadFile(path.join(__dirname, 'renderer/index.html'));
