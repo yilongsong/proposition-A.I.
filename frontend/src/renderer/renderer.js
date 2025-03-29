@@ -34,25 +34,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             elements.propositionalizeButton.classList.add('processing');
-            elements.propositionalizeButton.disabled = true;
+            elements.propositionalizeButton.disabled = false;
             elements.cleanupResults.innerHTML = '';
             
             // Show split view and loading state
             document.querySelector('.note-taking-area').classList.add('split');
             document.querySelector('.proposition-review-area').classList.add('visible');
+            
+            // Reset and show loading message
             const loadingMessage = document.getElementById('loading-message');
+            loadingMessage.style.display = '';
             loadingMessage.classList.remove('hidden');
             
-            const result = await window.api.processNote(notes);
+            // Create handleStop function that can be removed later
+            const handleStop = async () => {
+                await window.api.killProcess();
+                elements.propositionalizeButton.classList.remove('processing');
+                loadingMessage.classList.add('hidden');
+                
+                // Collapse the bottom section
+                document.querySelector('.note-taking-area').classList.remove('split');
+                document.querySelector('.proposition-review-area').classList.remove('visible');
+                
+                // Clear any existing content
+                elements.cleanupResults.innerHTML = '';
+                
+                // Clean up the event listener
+                elements.propositionalizeButton.removeEventListener('click', handleStop);
+            };
+
+            // Add stop handler
+            elements.propositionalizeButton.addEventListener('click', handleStop);
             
             try {
+                const result = await window.api.processNote(notes);
+                // Remove stop handler after successful completion
+                elements.propositionalizeButton.removeEventListener('click', handleStop);
+                
                 const propositions = JSON.parse(result);
                 
-                // First, completely remove loading message
+                // Hide loading message
                 loadingMessage.classList.add('hidden');
-                loadingMessage.style.display = 'none';  // Force hide
+                loadingMessage.style.display = 'none';
                 
-                // Then show propositions
+                // Show propositions
                 propositions.forEach((proposition, index) => {
                     const div = document.createElement('div');
                     div.className = 'proposition-item';
@@ -64,12 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
             } catch (parseError) {
+                // Remove stop handler in case of error
+                elements.propositionalizeButton.removeEventListener('click', handleStop);
                 console.error('Parse error:', parseError);
                 throw new Error(`Failed to parse response: ${result}`);
             }
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById('loading-message').classList.add('hidden');
+            loadingMessage.classList.add('hidden');
             elements.cleanupResults.innerHTML = `<div class="error">Error: ${error.message}</div>`;
         } finally {
             elements.propositionalizeButton.classList.remove('processing');

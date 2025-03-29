@@ -6,4 +6,4 @@ template: |
   such that it is grammatically correct, concise and refined, and label each proposition with its category
   (knowledge, interpretation, example, opinion, source).
 
-  For each proposition, output the result on a new line in the format 'label: proposition'.
+  For each proposition, output the result on a new line in the format 'label: proposition' without numbering.

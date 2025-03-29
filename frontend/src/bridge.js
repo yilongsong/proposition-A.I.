@@ -1,9 +1,16 @@
 const { spawn } = require('child_process');
 const path = require('path');
 
+let currentPythonProcess = null;  // Store reference to current process
+
 function callPythonFunction(action, data) {
   console.log('callPythonFunction called:', {action, data}); 
   return new Promise((resolve, reject) => {
+    // Kill any existing process
+    if (currentPythonProcess) {
+      currentPythonProcess.kill();
+    }
+
     const pythonProcess = spawn('poetry', [
       'run',
       'python',
@@ -46,6 +53,8 @@ except Exception as e:
       env: { ...process.env, PYTHONPATH: path.join(__dirname, '../../backend/src') }
     });
 
+    currentPythonProcess = pythonProcess;  // Store reference
+
     let result = '';
     let error = '';
 
@@ -59,6 +68,7 @@ except Exception as e:
     });
 
     pythonProcess.on('close', (code) => {
+      currentPythonProcess = null;  // Clear reference
       if (code !== 0) {
         reject(new Error(error || 'Process failed'));
       } else {
@@ -74,4 +84,11 @@ except Exception as e:
   });
 }
 
-module.exports = { callPythonFunction };
+function killCurrentProcess() {
+  if (currentPythonProcess) {
+    currentPythonProcess.kill();
+    currentPythonProcess = null;
+  }
+}
+
+module.exports = { callPythonFunction, killCurrentProcess };

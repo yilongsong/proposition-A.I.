@@ -1,5 +1,5 @@
 const { contextBridge } = require('electron');
-const { callPythonFunction } = require('./bridge');
+const { callPythonFunction, killCurrentProcess } = require('./bridge');
 
 contextBridge.exposeInMainWorld(
   'api',
@@ -23,6 +23,9 @@ contextBridge.exposeInMainWorld(
         console.error('Error saving propositions:', error);
         throw error;
       }
+    },
+    killProcess: () => {
+      killCurrentProcess();
     }
   }
 );
