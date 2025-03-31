@@ -1,4 +1,4 @@
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 const { callPythonFunction, killCurrentProcess } = require('./bridge');
 
 contextBridge.exposeInMainWorld(
@@ -26,6 +26,9 @@ contextBridge.exposeInMainWorld(
     },
     killProcess: () => {
       killCurrentProcess();
-    }
+    },
+    minimizeWindow: () => ipcRenderer.send('minimize-window'),
+    maximizeWindow: () => ipcRenderer.send('maximize-window'),
+    closeWindow: () => ipcRenderer.send('close-window'),
   }
 );

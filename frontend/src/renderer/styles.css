@@ -7,54 +7,30 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   display: flex;
+  flex-direction: column;
   height: 100vh;
   background-color: #1e1e1e;
 }
 
+/* Create a wrapper for content below titlebar */
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  margin-top: 52.5px; /* Account for titlebar */
+  height: calc(100vh - 30px);
+}
+
 .sidebar {
-  width: 60px;           /* Reduced from 250px */
+  margin-top: 0; /* Remove margin since we're using content-wrapper */
+  width: 60px;
   background-color: #252526;
   display: flex;
   flex-direction: column;
-  align-items: center;   /* Center icons horizontally */
-  padding: 20px 10px;    /* Adjusted padding */
-  box-sizing: border-box;
-}
-
-.menu-item {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  width: 48px;     /* Adjust square container size */
-  height: 48px;    /* Adjust square container size */
-  padding: 0;      /* Remove extra padding so icon is centered */
-  color: #6e6e6e;
-  cursor: pointer;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  transition: all 0.2s ease;
-}
-
-/* Increase the icon size */
-.menu-item svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* When hovered or active, only change the icon’s background */
-.menu-item:hover,
-.menu-item.active {
-  background-color: transparent;
-  color: #d4d4d4;
-}
-
-.menu-item:hover svg {
-  background-color: #2d2d2d;
-}
-
-.menu-item.active svg {
-  background-color: #37373d;
-  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-right: 1px solid #37373d;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
 }
 
 .main-content {
@@ -63,6 +39,110 @@ body {
   position: relative;
   overflow-y: auto;
   background-color: #1e1e1e;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: #6e6e6e;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transition: color 0.2s ease;  /* Only transition color */
+}
+
+.menu-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Only change the color on hover/active */
+.menu-item:hover,
+.menu-item.active {
+  color: #d4d4d4;
+}
+
+.titlebar {
+  height: 52.5px;
+  background: #1e1e1e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  -webkit-app-region: drag;
+  border-bottom: 1px solid #37373d;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  padding-left: 80px;
+  -webkit-app-region: no-drag;
+}
+
+.folder-button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #6e6e6e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.folder-button:hover {
+  color: #d4d4d4;
+}
+
+.titlebar-drag-region {
+  flex: 1;
+  height: 100%;
+}
+
+/* .window-title {
+  color: #808080;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+} */
+
+.window-control {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #808080;
+  cursor: pointer;
+}
+
+.window-control:hover {
+  background: #2d2d2d;
+}
+
+.window-control.close:hover {
+  background: #c42b1c;
+  color: white;
 }
 
 .section {

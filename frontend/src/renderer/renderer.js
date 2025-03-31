@@ -169,37 +169,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle save button click
     elements.savePropositionsButton?.addEventListener('click', async () => {
         const notes = elements.notesInput.value;
-        const selectedPropositions = [];
+        const propositions = [];
         
+        // Get all proposition items and their edited content
         document.querySelectorAll('.proposition-item').forEach(item => {
-            if (item.querySelector('.proposition-checkbox').checked) {
-                const content = item.querySelector('.proposition-content');
-                const label = content.querySelector('strong').textContent.replace(':', '');
-                const proposition = content.textContent.substring(label.length + 2);
-                selectedPropositions.push({
+            const content = item.querySelector('[contenteditable="true"]');
+            // Extract proposition and label, handling the label in parentheses
+            const text = content.textContent;
+            const labelMatch = text.match(/\((.*?)\)$/);
+            if (labelMatch) {
+                const label = labelMatch[1];
+                const proposition = text.slice(0, -labelMatch[0].length).trim();
+                propositions.push({
                     proposition: proposition,
                     label: label
                 });
             }
         });
 
-        if (selectedPropositions.length > 0) {
+        if (propositions.length > 0) {
             try {
                 elements.savePropositionsButton.disabled = true;
-                elements.savePropositionsButton.textContent = 'Saving...';
                 
                 await window.api.savePropositions('save', {
                     note: notes,
-                    propositions: selectedPropositions
+                    propositions: propositions
                 });
                 
-                alert('Propositions saved successfully!');
+                // Optional: Show subtle success indicator
+                elements.savePropositionsButton.classList.add('success');
+                setTimeout(() => {
+                    elements.savePropositionsButton.classList.remove('success');
+                }, 2000);
                 
             } catch (error) {
-                alert('Error saving propositions: ' + error.message);
+                console.error('Error saving propositions:', error);
             } finally {
                 elements.savePropositionsButton.disabled = false;
-                elements.savePropositionsButton.textContent = 'Save Selected';
             }
         }
     });
@@ -234,4 +240,17 @@ document.addEventListener('DOMContentLoaded', () => {
         chatWindow.appendChild(messageDiv);
         chatWindow.scrollTop = chatWindow.scrollHeight;
     }
+
+    // Window control handlers
+    document.querySelector('.window-control.minimize').addEventListener('click', () => {
+        window.api.minimizeWindow();
+    });
+    
+    document.querySelector('.window-control.maximize').addEventListener('click', () => {
+        window.api.maximizeWindow();
+    });
+    
+    document.querySelector('.window-control.close').addEventListener('click', () => {
+        window.api.closeWindow();
+    });
 });

@@ -1,12 +1,16 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 900,          // Updated from 1200
-    height: 700,         // Updated from 800
-    minWidth: 600,       // Add minimum width
-    minHeight: 400,      // Add minimum height
+    titleBarStyle: 'hiddenInset',
+    trafficLightPosition: { x: 18, y: 18 },
+    width: 900,
+    height: 700,
+    minWidth: 600,
+    minHeight: 400,
+    frame: false,  // Remove default window frame
+    titleBarStyle: 'hidden', // Hide default title bar
     backgroundColor: '#1e1e1e',
     webPreferences: {
       nodeIntegration: false,
@@ -30,6 +34,24 @@ function createWindow () {
 
   win.loadFile(path.join(__dirname, 'renderer/index.html'));
 }
+
+// Add these after createWindow()
+ipcMain.on('minimize-window', () => {
+  BrowserWindow.getFocusedWindow()?.minimize();
+});
+
+ipcMain.on('maximize-window', () => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win?.isMaximized()) {
+    win.unmaximize();
+  } else {
+    win?.maximize();
+  }
+});
+
+ipcMain.on('close-window', () => {
+  BrowserWindow.getFocusedWindow()?.close();
+});
 
 app.whenReady().then(createWindow);
 

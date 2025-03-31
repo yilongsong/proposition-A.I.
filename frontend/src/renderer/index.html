@@ -9,56 +9,70 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="sidebar">
-    <div class="menu-item active" id="note-taking-menu" title="Note Taking">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
-        <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
-        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
-        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
-      </svg>
+  <!-- Add custom title bar -->
+  <div class="titlebar">
+    <div class="titlebar-left">
+      <button class="folder-button" id="toggle-sidebar" title="Toggle Sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-layout-sidebar" viewBox="0 0 16 16">
+          <path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5-1v12h9a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zM4 2H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h2z"/>
+        </svg>
+      </button>
     </div>
-    <div class="menu-item" id="note-query-menu" title="Note Query">
-      <!-- Search icon for Note Query -->
-      <svg width="16" height="16" viewBox="0 0 16 16">
-        <path fill="currentColor" d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-      </svg>
-    </div>
+    <div class="titlebar-drag-region"></div>
   </div>
-  <div class="main-content">
-    <div id="note-taking-section" class="section active">
-      <!-- Top Section -->
-      <div class="note-taking-area">
-        <div class="note-input-container">
-          <textarea id="notes-input" placeholder=""></textarea>
-          <button id="propositionalize-button" class="send-button" title="Propositionalize">
-            <svg class="send-icon" width="16" height="16" viewBox="0 0 16 16">
-              <path fill="currentColor" d="M1.724 1.053a.5.5 0 0 0-.714.545l1.403 4.985a.5.5 0 0 0 .397.347l5.037.736a.5.5 0 0 1 0 .986l-5.037.736a.5.5 0 0 0-.397.347L1.01 14.72a.5.5 0 0 0 .714.545l13-6.5a.5.5 0 0 0 0-.894l-13-6.5z"/>
-            </svg>
-            <svg class="stop-icon hidden" width="16" height="16" viewBox="0 0 16 16">
-              <path fill="currentColor" d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-              <path fill="currentColor" d="M5 5h6v6H5z"/>
-            </svg>
-          </button>
-        </div>
+  
+  <div class="content-wrapper">
+    <div class="sidebar">
+      <div class="menu-item active" id="note-taking-menu" title="Note Taking">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+          <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+          <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+          <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+        </svg>
       </div>
-      
-      <!-- Bottom Section -->
-      <div class="proposition-review-area">
-        <div class="proposition-container">
-          <div id="loading-message" class="hidden">
-            <span class="dots"><span>.</span><span>.</span><span>.</span></span>
+      <div class="menu-item" id="note-query-menu" title="Note Query">
+        <!-- Search icon for Note Query -->
+        <svg width="16" height="16" viewBox="0 0 16 16">
+          <path fill="currentColor" d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="main-content">
+      <div id="note-taking-section" class="section active">
+        <!-- Top Section -->
+        <div class="note-taking-area">
+          <div class="note-input-container">
+            <textarea id="notes-input" placeholder=""></textarea>
+            <button id="propositionalize-button" class="send-button" title="Propositionalize">
+              <svg class="send-icon" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M1.724 1.053a.5.5 0 0 0-.714.545l1.403 4.985a.5.5 0 0 0 .397.347l5.037.736a.5.5 0 0 1 0 .986l-5.037.736a.5.5 0 0 0-.397.347L1.01 14.72a.5.5 0 0 0 .714.545l13-6.5a.5.5 0 0 0 0-.894l-13-6.5z"/>
+              </svg>
+              <svg class="stop-icon hidden" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill="currentColor" d="M5 5h6v6H5z"/>
+              </svg>
+            </button>
           </div>
-          <div id="cleanup-results"></div>
-          <button id="save-propositions" class="save-button" title="Save Propositions">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
-              <path d="M11 2H9v3h2z"/>
-              <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
-            </svg>
-          </button>
+        </div>
+        
+        <!-- Bottom Section -->
+        <div class="proposition-review-area">
+          <div class="proposition-container">
+            <div id="loading-message" class="hidden">
+              <span class="dots"><span>.</span><span>.</span><span>.</span></span>
+            </div>
+            <div id="cleanup-results"></div>
+            <button id="save-propositions" class="save-button" title="Save Propositions">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
+                <path d="M11 2H9v3h2z"/>
+                <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="renderer.js"></script>
-</body>
+    <script src="renderer.js"></script>
+  </body>
+</div>
 </html>
